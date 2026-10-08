@@ -1,103 +1,116 @@
 # Lean Core
 
-Мінімальна серверна база для Luanti (раніше Minetest), оптимізована
-для роботи з великою кількістю гравців.
+A minimal server base for Luanti (formerly Minetest), optimized
+for running with a large number of players.
 
-## Що це
+## What is it
 
-Lean Core — це «голий каркас» гри, на який можна навішувати моди
-за потребою. У базі залишено лише три моди:
+Lean Core is a "bare skeleton" game that you can extend with mods
+as needed. Only three mods are included:
 
-- `default` — блоки, інструменти, крафти, генерація світу;
-- `player_api` — модель і анімації гравця;
-- `spawn` — точка появи.
+- `default` — blocks, tools, crafting, world generation;
+- `player_api` — player model and animations;
+- `spawn` — spawn point.
 
-Усе інше (квіти, двері, меблі, TNT, сходи, вовна тощо) вирізано
-свідомо — щоб сервер стартував швидше й споживав менше ресурсів.
+Everything else (flowers, doors, furniture, TNT, stairs, wool, etc.)
+has been deliberately removed to make the server start faster and
+consume fewer resources.
 
-## Навіщо
+## Why
 
-Мета — мінімальне навантаження на сервер при збереженні базового
-геймплею. Це не «спрощена версія Minetest Game», а **чиста основа
-для власного проєкту**.
+The goal is minimal server load while keeping basic gameplay.
+This is not a "simplified version of Minetest Game" but a
+**clean foundation for your own project**.
 
-## Що змінено порівняно з Minetest Game
+## Changes compared to Minetest Game
 
-### Генерація світу
-- Прибрано біоми: `icesheet`, `tundra`, `cold_desert` (та їхні підтипи).
-- Прибрано декорації: `marram_grass`, `tundra moss`, `tundra patchy snow`.
-- Виправлено згадки видалених модів `stairs`, `walls` у біомах.
-- Залишено корали та папірус — для модів, що їх використовують.
+### World generation
+- Removed biomes: `icesheet`, `tundra`, `cold_desert` (and their subtypes).
+- Removed decorations: `marram_grass`, `tundra moss`, `tundra patchy snow`.
+- Fixed references to removed mods `stairs`, `walls` in biomes.
+- Kept corals and papyrus — for mods that use them.
 
-### Постійне навантаження (ABM)
-- Усі 6 ABM сповільнено в 4 рази (інтервали 6→24, 8→32, 16→64 тощо).
-- Результат: ~4x менше роботи CPU щосекунди.
+### Constant load (ABM)
+- All 6 ABMs slowed down by 4x (intervals 6→24, 8→32, 16→64, etc.).
+- Result: ~4x less CPU work per second.
 
-### Предмети на землі
-- Видалено перевірку горіння предметів (`item_entity.lua`).
-- Предмети просто зникають через час (`item_entity_ttl` у `minetest.conf`).
+### Items on the ground
+- Removed item burning check (`item_entity.lua`).
+- Items simply disappear over time (`item_entity_ttl` in `minetest.conf`).
 
-### Печі
-- Звук активної печі: кожні 5 сек → 15 сек.
-- Звук охолодження тихіший і грає рідше.
+### Furnaces
+- Active furnace sound: every 5 sec → 15 sec.
+- Cooling sound is quieter and plays less often.
 
-### Скрині
-- Локалізовано виклики `minetest.*` у гарячих шляхах.
-- Логування дій збережено.
+### Chests
+- Localized `minetest.*` calls in hot paths.
+- Action logging preserved.
 
-### Анімації гравця
-- `globalstep` виконується раз на 0.3 сек замість кожного тіку.
-- Анімації залишились плавними, навантаження впало ~2x.
+### Player animations
+- `globalstep` runs every 0.3 sec instead of every tick.
+- Animations remain smooth, load reduced by ~2x.
 
-### Чистота
-- Прибрано 18 зайвих налаштувань із `settingtypes.txt`.
-- Видалено переклади опису гри (`.de.tr`, `.fr.tr`) — тепер опис
-  береться з `game.conf`.
-- Додано `stubs.lua` — заглушки для нод із видалених модів
-  (`flowers:mushroom_*`), щоб у лог не сипались помилки.
+### Cleanup
+- Removed 18 unnecessary settings from `settingtypes.txt`.
+- Removed game description translations (`.de.tr`, `.fr.tr`) — the
+  description now comes from `game.conf`.
+- Added `stubs.lua` — stub nodes for removed mods
+  (`flowers:mushroom_*`), so the log stays clean.
 
-## Встановлення
+## Installation
 
-1. Завантажте архів із розділу **Releases**.
-2. Розпакуйте папку `lean_core` у директорію `games` вашого Luanti.
-   Типові шляхи:
-   - **Windows:** `%APPDATA%\Luanti\games\` або поруч із `bin\`
-   - **Linux:** `~/.minetest/games/` або `~/.luanti/games/`
-3. Запустіть Luanti → гра має з'явитись у списку як **Lean Core**.
+1. Download the archive from the **Releases** section.
+2. Unpack the `lean_core` folder into the `games` directory of your Luanti.
+   Typical paths:
+   - **Windows:** `%APPDATA%\Luanti\games\` or next to `bin\`
+   - **Linux:** `~/.minetest/games/` or `~/.luanti/games/`
+3. Launch Luanti → the game should appear in the list as **Lean Core**.
 
-## Рекомендовані налаштування
+## Recommended settings
 
-У `minetest.conf` для мінімального навантаження:
+In `minetest.conf` for minimal load:
 
 ```ini
-# Час життя предметів на землі (секунди)
+# Time-to-live for items on the ground (seconds)
 item_entity_ttl = 60
 
-# Радіус активної зони навколо гравця (менше — легше)
+# Active block range around each player (smaller = lighter)
 active_block_range = 2
 
-# Дистанція генерації блоків
+# Block generation distance
 max_block_generate_distance = 6
 
-# Інтервал збереження карти (секунди)
+# Map save interval (seconds)
 server_map_save_interval = 15
 ```
 
-## Ліцензія
+## Origin
 
-Код рушія Lean Core базується на **Minetest Game**, який
-розповсюджується під **LGPL-2.1+**. Тому цей проєкт успадковує
-ту саму ліцензію. Деталі — у файлі `LICENSE.txt`.
+Lean Core is a fork of [Minetest Game](https://github.com/luanti-org/minetest_game),
+created with the goal of minimizing server load.
 
-Текстури, звуки й моделі мають власні ліцензії (переважно
-CC BY-SA 3.0), повний список — у `mods/default/license.txt`,
+The original code is distributed under LGPL-2.1+
+(Copyright © 2011-2018 celeron55, Perttu Ahola and other contributors).
+Lean Core inherits this license.
+
+Significant changes made in Lean Core are listed above in the
+"Changes compared to Minetest Game" section.
+
+## License
+
+The engine code of Lean Core is based on **Minetest Game**, which
+is distributed under **LGPL-2.1+**. This project therefore inherits
+the same license. See `LICENSE.txt` for details.
+
+Textures, sounds and models have their own licenses (mostly
+CC BY-SA 3.0). Full list in `mods/default/license.txt`,
 `mods/player_api/license.txt`, `mods/spawn/license.txt`.
 
-## Автор
+## Author
 
 8a7l
 
-## Подяки
+## Credits
 
-- Команді Luanti / Minetest за рушій і базову гру.
-- Усім, хто робив Minetest Game відкритим і безкоштовним.
+- The Luanti / Minetest team for the engine and base game.
+- Everyone who made Minetest Game open and free.
