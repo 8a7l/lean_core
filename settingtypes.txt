@@ -1,22 +1,22 @@
-# Налаштування гри My Base.
-# Читаються з minetest.conf під час старту сервера.
+# Settings for Lean Core.
+# These are read from minetest.conf at server startup.
 
-#    У креативному режимі гравці копають майже миттєво й мають
-#    необмежені ресурси.
+#    In creative mode players are able to dig all kind of blocks nearly
+#    instantly, and have access to unlimited resources.
 creative_mode (Creative mode) bool false
 
-#    Охолодження лави: коли лава торкається води — стає каменем.
-#    Трохи навантажує ABM, але приємно для гри.
+#    Enable lava cooling: when lava touches water, it turns into stone.
+#    Slightly increases ABM load, but is nice for gameplay.
 enable_lavacooling (Lavacooling) bool true
 
-#    Якщо увімкнено, гравцям при першому вході видається
-#    базовий набір: стальні інструменти, факели, кругляк.
+#    If enabled, players are given a basic starter kit on first join:
+#    steel tools, torches, cobblestone.
 give_initial_stuff (Give initial items) bool false
 
-#    Якщо увімкнено — використовується вбудований у рушій пошук спавну,
-#    який не перевіряє біом. Швидше, ніж стандартний.
+#    If enabled, the engine's built-in spawn search is used, which does
+#    not check the biome. Faster than the default search.
 engine_spawn (Use engine spawn search) bool false
 
-#    Якщо увімкнено — логуються дії не-гравців (мобів, механізмів тощо).
-#    На сервері краще false, щоб не забивати debug.txt.
+#    If enabled, non-player actions are logged (mobs, mechanisms, etc.).
+#    On a server, keep this false to avoid bloating debug.txt.
 log_non_player_actions (Log non-player action) bool false
