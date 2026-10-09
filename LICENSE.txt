@@ -1,19 +1,27 @@
-License of media (textures and sounds)
---------------------------------------
-Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
-See README.txt in each mod directory for information about other authors.
+License of media (textures, sounds, models, schematics)
+--------------------------------------------------------
 
-Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+Media files in Lean Core are distributed under various free licenses,
+mostly Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0).
 http://creativecommons.org/licenses/by-sa/3.0/
 
-License of menu/header.png
-Copyright (C) 2015 paramat CC BY-SA 3.0
+Full attribution and license details for media are available in:
+
+  - mods/default/license.txt
+  - mods/player_api/license.txt
+  - mods/spawn/license.txt
 
 
 License of source code
 ----------------------
+
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
-See README.txt in each mod directory for information about other authors.
+Copyright (C) 2011-2018 Various Minetest Game developers and contributors
+Copyright (C) 2026 8a7l (Lean Core modifications)
+
+Lean Core is a fork of Minetest Game, distributed under the
+GNU Lesser General Public License, version 2.1 or later.
+See below for the full license text.
 
                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999
